@@ -3,6 +3,8 @@
 #### What does the Haskell script do? 
 - Parse specific syntax file and generate HTML from a given CSS file 
 
+- [Demo](http://tiny3.com)
+
 #### How to use it 
 - Assume your have file called myfile.txt as following
 
