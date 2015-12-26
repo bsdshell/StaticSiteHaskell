@@ -2,7 +2,7 @@
 Parse specific syntax file and Generate a HTML/CSS file
 
 ### Title syntax
- - [ my title ]
+    [ my title ]
 
 ### Comment syntax
-    - // This is my comments
+    // This is my comments
