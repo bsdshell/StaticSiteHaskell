@@ -1,6 +1,7 @@
-# StaticSiteHaskell
-Parse specific syntax file and Generate a HTML/CSS file
+# Generate HTML/CSS from specific syntax file 
 
+#### What does the Haskell code do? 
+    - Parse specific syntax file and generate HTML/CSS file 
 ##### Title syntax
     [ my title ]
 
@@ -13,3 +14,5 @@ Parse specific syntax file and Generate a HTML/CSS file
         myMax [x] = x 
         mymax (x:xs) = if x > mymax xs then x else mymax xs  
     `]
+##### Command code syntax
+    :grep --color -Hnris string *.java

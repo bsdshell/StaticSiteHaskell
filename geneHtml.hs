@@ -69,20 +69,6 @@ mergeList2 (x:xs) (y:ys) =
             Nothing  -> Nothing
 mergeList2 _ _  = Nothing
 
---codeBlock::String->String->String->String
---codeBlock open close str = op str rep
---                        where op = subRegex (mkRegex pat)  
---                              --rep = open ++ "\\1" ++ close
---                              rep = open ++ newrep ++ close
---                              --newrep = subRegex(mkRegex "(\\[)") mstr  "<span class=\"bracket\">\1</span>" 
---                              --newrep = subRegex(mkRegex "(\\[)") ("aron\1aron2"++mstr) mstr 
---                              newrep = subRegex(mkRegex "return")  mstr "aron\\1aron\\0aron\0aronaron" 
---                              where mstr = "\\1"
---                                    pat = codeOpen ++ "(([^`]|`[^[]]*|\n*)*)" ++ codeClose --fix it
---                                        where 
---                                              codeOpen = "^[[:space:]]*`\\[[[:space:]]*$"
---                                              codeClose = "[[:space:]]*`\\][[:space:]]*$"
-
 lt                      =  "(<)"
 gt                      =  "(>)"
 
@@ -148,9 +134,6 @@ main = do
     let list7     = replace html_tab "\\0<br>" list6
     let list8     = codeBlock preOpen preClose (unlines list7):[]
     print $ codeCapture "`[ what is new `]" 
-    --print $ filter(\x-> (isInfixOf "`[" x) || (isInfixOf "`]" x) ) $ splitRegex(mkRegex " |\n") (unlines list6)
-    --let splitcode  = splitRegex(mkRegex "[[:space:]]+`\\[[[:space:]]+|[[:space:]]+`\\][[:space:]]+") (unlines list7)
-    ---let splitcode  = splitRegex(mkRegex "([[:blank:]\n]+`\\[[[:blank:]]*\n)|([[:blank:]\n]+`\\][[:blank:]]*\n)") (unlines list7)
     let splitcode  = splitRegex(mkRegex "([[:blank:]]+`\\[[[:blank:]]*\n)|([[:blank:]]+`\\][[:blank:]]*\n)") (unlines list7)
 
     let oddList    = fst $ splitList splitcode
