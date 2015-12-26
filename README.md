@@ -16,7 +16,6 @@
     `]
     ```
 - You want to style it or put some nice colors on it
-
 - Install Haskell in your machine(I use Mac)
 - Clone the repo. 
 - Put myfile.txt in your cloned directory
@@ -24,8 +23,9 @@
 ```sh
 runhaskell geneHtml.hs mytext.txt myhtml.html
 ```
-- 5. myhtml.html will be generated and point your favour browner to the file
-- Note: The haskell script uses mycss.css file to style mytext.txt file
+- myhtml.html will be generated and point your favour browner to the file
+
+##### Note: The haskell script uses mycss.css file to style mytext.txt file
 
 #### The Haskell script support following syntaxes 
 
