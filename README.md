@@ -1,12 +1,12 @@
 # StaticSiteHaskell
 Parse specific syntax file and Generate a HTML/CSS file
 
-### Title syntax
+##### Title syntax
     [ my title ]
 
-### Comment syntax
+##### Comment syntax
     // This is my comments
-### Source code syntax
+##### Source code syntax
     `[
         myMax::[Int]->Int
         myMax [] = 0
