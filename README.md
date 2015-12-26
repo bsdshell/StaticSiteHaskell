@@ -1,6 +1,5 @@
-# Generate Html file from specific syntax file
+# StaticSiteHaskell
+Parse specific syntax file and Generate a HTML/CSS file
 
-### title 
-    - [ My title ]
-### comment
-    - // The code are cool
+ ### title syntax
+ > [ my title ]
