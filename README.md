@@ -25,7 +25,7 @@
 ```sh
 runhaskell geneHtml.hs mytext.txt myhtml.html
 ```
-- myhtml.html will be generated and you can point your favour browner to the file
+- myhtml.html will be generated and you can point your favour browser to the file
 
 ##### Note: The haskell script uses mycss.css file to style mytext.txt file
 
