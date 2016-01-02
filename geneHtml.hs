@@ -21,7 +21,8 @@ replaceImgTab input = subRegex(mkRegex imgPattern) filterStr  rep
                         | length l > 0 =  head l 
                         | otherwise = input 
                         where 
-                            l = filter(\x-> length x > 0) $ splitRegex(mkRegex "^[[:space:]]*\\[\\[|\\]\\][[:space:]]*") input
+                            --l = filter(\x-> length x > 0) $ splitRegex(mkRegex "^[[:space:]]*\\[\\[|\\]\\][[:space:]]*") input
+                            l = filter(\x-> length x > 0) $ splitRegex(mkRegex "^[[:space:]]*{{|}}[[:space:]]*") input
  
 
 codelist = splitRegex(mkRegex "\\[|\\]") "what[code1][code2]"
