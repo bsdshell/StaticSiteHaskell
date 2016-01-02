@@ -1,10 +1,14 @@
 import System.IO
+import System.Directory
 import System.Environment
 import Text.Regex.Posix
 import Text.Regex
 import Data.List 
 import Data.List.Split 
+import AronModule
 
+-- display image syntax
+-- [[ src=image/img.png w=50% h=30% ]]
 replaceImgTab::String->String
 replaceImgTab input = subRegex(mkRegex imgPattern) filterStr  rep 
                 where
@@ -19,19 +23,8 @@ replaceImgTab input = subRegex(mkRegex imgPattern) filterStr  rep
                         where 
                             l = filter(\x-> length x > 0) $ splitRegex(mkRegex "^[[:space:]]*\\[\\[|\\]\\][[:space:]]*") input
  
--- split into two lists: odd index list and even index list
-splitList::[String]->([String], [String])
-splitList [] = ([], [])
-splitList [x] = ([x], [])
-splitList (x:y:xs) = (x:xp, y:yp) where (xp, yp) = splitList xs
-
-unwrap::Maybe a -> a
-unwrap Nothing = error "this is nothing from unwrap" 
-unwrap (Just x) = x
 
 codelist = splitRegex(mkRegex "\\[|\\]") "what[code1][code2]"
-
-
 
 style::String->String->String->[String]->[String]
 style pat l r list = map(`op` rep) list 
@@ -55,33 +48,11 @@ codeHighLight pat list = map(`op` rep) list
                 where rep = "<span class=\"bracket\">\\1</span>"
                       op = subRegex $ mkRegex pat
 
-codeCapture::String->String
-codeCapture str = subRegex(mkRegex pat) str rep 
-                    where rep = "<cool>\\1</cool>" 
-                          pat = "(([^`]|`[^[]]*|\n*)*)"
+displayPath::String->String->String->String
+displayPath path inFile outFile = if inFile == "mytext.txt" 
+                            then "file://" ++path ++ "/" ++ outFile 
+                            else ""
 
-codeBlock::String->String->String->String
-codeBlock open close str = op str rep
-                        where op = subRegex (mkRegex pat)  
-                              rep = open ++ "\\1" ++ close
-                              pat = codeOpen ++ "(([^`]|`[^[]]*|\n*)*)" ++ codeClose --fix it
-                                  where 
-                                        codeOpen = "^[[:space:]]*`\\[[[:space:]]*$"
-                                        codeClose = "[[:space:]]*`\\][[:space:]]*$"
-
-mergeList::[String]->[String]->[String]
-mergeList [] [] = []
-mergeList  l  [] = l 
-mergeList []  r = r 
-mergeList (x:xs) (y:ys) = x:y:mergeList xs ys 
-
-mergeList2::[a]->[a]->Maybe [a]
-mergeList2 [] [] = Just [] 
-mergeList2 (x:xs) (y:ys) = 
-            case mergeList2 xs ys of
-            Just merged -> Just (x:y:merged)
-            Nothing  -> Nothing
-mergeList2 _ _  = Nothing
 
 lt                      =  "(<)"
 gt                      =  "(>)"
@@ -132,6 +103,9 @@ main = do
     handle <- openFile inFile ReadMode
     contents <- hGetContents handle
 
+    currDir <- getCurrentDirectory
+    print currDir
+
     let line      = lines contents
 
     let r_title   = mkRegex title
@@ -155,27 +129,22 @@ main = do
 
     let oddList    = fst $ splitList splitcode
     let evenList   = snd $ splitList splitcode
-    print evenList
 
     --let pat        = "(\\[|\\]|\\(|\\)|{|})"
     let styleCode1         = codeHighLight pattern evenList 
     let styleCode         = codeHighLight pattern1 styleCode1 
     let finalStyleCode     = map(preOpen ++) $ map(++ preClose) styleCode 
-    print finalStyleCode
-    
-    print "----------------------------------------"
-    print styleCode 
-    print "----------------------------------------"
-    print finalStyleCode
-    print "----------------------------------------"
-    print $ length oddList
-    print $ length styleCode  
 
     let mergeAllList = mergeList oddList finalStyleCode 
-    print "[================================================="
-    print mergeAllList 
-    print "]================================================="
+
     writeFile outFile $ html htmlOpen htmlClose mergeAllList 
 
     --putStr contents
     hClose handle
+
+    currDir <- getCurrentDirectory
+    let fullPath = displayPath currDir inFile outFile 
+    putStrLn ""
+    putStrLn "Html Path: copy following path to your browser"
+    putStrLn fullPath
+
