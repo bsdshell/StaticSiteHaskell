@@ -5,6 +5,20 @@ import Text.Regex
 import Data.List 
 import Data.List.Split 
 
+replaceImgTab::String->String
+replaceImgTab input = subRegex(mkRegex imgPattern) filterStr  rep 
+                where
+                    imgPattern = "(src[[:space:]]*=[[:space:]]*)([^[:space:]]+)" ++ "[[:space:]]+" ++
+                                 "(w[[:space:]]*=[[:space:]]*)([^[:space:]]+)" ++ "[[:space:]]+" ++ 
+                                 "(h[[:space:]]*=[[:space:]]*)([^[:space:]]*)"
+                    rep = "<div class=\"cen\"><img src=\\2 width=\"\\4\" height=\"\\6\"></div>"
+
+                    filterStr 
+                        | length l > 0 =  head l 
+                        | otherwise = input 
+                        where 
+                            l = filter(\x-> length x > 0) $ splitRegex(mkRegex "^[[:space:]]*\\[\\[|\\]\\][[:space:]]*") input
+ 
 -- split into two lists: odd index list and even index list
 splitList::[String]->([String], [String])
 splitList [] = ([], [])
@@ -129,12 +143,15 @@ main = do
     let list2     = style keyword openSpan closeSpan list1 
     let list3     = style title titleOpen titleClose list2 
     let list4     = style comment commentOpen commentClose list3
-    let list5     = style header headerOpen headerClose list4
-    let list6     = style numName spanNumOpen spanNumCose list5
-    let list7     = replace html_tab "\\0<br>" list6
-    let list8     = codeBlock preOpen preClose (unlines list7):[]
+
+    let list5     = map(\x->  replaceImgTab x) list4 
+
+    let list6     = style header headerOpen headerClose list5
+    let list7     = style numName spanNumOpen spanNumCose list6
+    let list8     = replace html_tab "\\0<br>" list7
+
     print $ codeCapture "`[ what is new `]" 
-    let splitcode  = splitRegex(mkRegex "([[:blank:]]+`\\[[[:blank:]]*\n)|([[:blank:]]+`\\][[:blank:]]*\n)") (unlines list7)
+    let splitcode  = splitRegex(mkRegex "([[:blank:]]+`\\[[[:blank:]]*\n)|([[:blank:]]+`\\][[:blank:]]*\n)") (unlines list8)
 
     let oddList    = fst $ splitList splitcode
     let evenList   = snd $ splitList splitcode
