@@ -47,4 +47,4 @@ runhaskell geneHtml.hs mytext.txt myhtml.html
     :grep --color -Hnris string *.java
 
 ##### Image syntax
-    [[ src=path/image.png w=50% h=50%]]
+    {{ src=path/image.png w=50% h=50% }}
