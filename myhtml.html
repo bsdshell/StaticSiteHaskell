@@ -177,7 +177,7 @@
               <span class="bracket">[</span>8, 9<span class="bracket">]</span>
              <span class="bracket">]</span>
 
-        <span class="bracket">mmult::</span><span class="bracket">[</span><span class="bracket">[</span>Int
+        <span class="bracket">mmult::</span><span class="bracket">[</span><span class="bracket">[</span>Int<span class="bracket">]</span><span class="bracket">]</span> <span class="bracket">-&gt;</span> <span class="bracket">[</span><span class="bracket">[</span>Int<span class="bracket">]</span><span class="bracket">]</span> <span class="bracket">-&gt;</span> <span class="bracket">[</span><span class="bracket">[</span>Int<span class="bracket">]</span><span class="bracket">]</span> 
         mmult a b = <span class="bracket">[</span> <span class="bracket">[</span> sum $ zipWith <span class="bracket">(</span>*<span class="bracket">)</span> ar bc | bc &lt;- <span class="bracket">(</span>transpose b<span class="bracket">)</span> <span class="bracket">]</span> | ar &lt;- a <span class="bracket">]</span>
 </pre>
  
@@ -202,7 +202,7 @@
         \h - Host name
 </pre>
 
- <div class="cen"><img src=image/manhattan.png width="50%" height="50%"></div>
+ <div class="cen"><img src=image/manhattan.png width="50%" height="50%"></div> 
 
      
 

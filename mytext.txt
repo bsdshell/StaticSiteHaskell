@@ -202,7 +202,7 @@
         \h - Host name
     `]
 
-    [[ src=image/manhattan.png w=50% h=50%]]
+    {{ src=image/manhattan.png w=50% h=50% }}
 
      
 
