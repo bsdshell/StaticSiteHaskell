@@ -21,11 +21,8 @@ replaceImgTab input = subRegex(mkRegex imgPattern) filterStr  rep
                         | length l > 0 =  head l 
                         | otherwise = input 
                         where 
-                            --l = filter(\x-> length x > 0) $ splitRegex(mkRegex "^[[:space:]]*\\[\\[|\\]\\][[:space:]]*") input
                             l = filter(\x-> length x > 0) $ splitRegex(mkRegex "^[[:space:]]*{{|}}[[:space:]]*") input
  
-
-codelist = splitRegex(mkRegex "\\[|\\]") "what[code1][code2]"
 
 style::String->String->String->[String]->[String]
 style pat l r list = map(`op` rep) list 
@@ -115,6 +112,7 @@ main = do
 
     let list0     = replace lt html_lt line
     let list1     = replace gt html_gt list0 
+
     let list2     = style keyword openSpan closeSpan list1 
     let list3     = style title titleOpen titleClose list2 
     let list4     = style comment commentOpen commentClose list3
@@ -125,7 +123,6 @@ main = do
     let list7     = style numName spanNumOpen spanNumCose list6
     let list8     = replace html_tab "\\0<br>" list7
 
-    print $ codeCapture "`[ what is new `]" 
     let splitcode  = splitRegex(mkRegex "([[:blank:]]+`\\[[[:blank:]]*\n)|([[:blank:]]+`\\][[:blank:]]*\n)") (unlines list8)
 
     let oddList    = fst $ splitList splitcode
