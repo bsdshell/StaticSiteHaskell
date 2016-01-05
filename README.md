@@ -29,7 +29,7 @@ runhaskell geneHtml.hs mytext.txt myhtml.html
 
 ##### Note: The haskell script uses mycss.css file to style mytext.txt file
 
-#### The Haskell script support following syntaxes 
+#### The Haskell script support following text file syntaxes 
 
 ##### Title syntax
     [ my title ]
