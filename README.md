@@ -20,7 +20,6 @@
 - You want to style it or put some nice colors on it
 - Install Haskell in your machine(I use Mac)
 - Clone the repo. 
-- Put myfile.txt in your cloned directory
 - Goto your cloned directory and run following command
 ```sh
 runhaskell geneHtml.hs mytext.txt myhtml.html
