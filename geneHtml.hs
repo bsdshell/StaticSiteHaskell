@@ -114,12 +114,24 @@ main = do
     let evenListCode1  = replace lt html_lt evenListCode 
     let evenListCode2  = replace gt html_gt evenListCode1 
 
+    print oddList
+    print "----------------------------------"
     let oddListList = map(\x->splitRegex(mkRegex "\n") x) oddList 
+    print oddListList
 
+    
     let list00 = map(\x -> replace lt html_lt x) oddListList
     let list11 = map(\x -> replace gt html_gt x) list00 
 
-    let list22 = map(\x -> style keyword openSpan closeSpan x) list11 
+    let listxx = map(\x -> if length x > 0 then init x else x) list11
+    let listxx11 = map(\x-> map(\y -> if length y == 0 then "<br>" else y) x) listxx 
+    print "================================="
+    print listxx11
+    print "================================="
+
+
+    --let list22 = map(\x -> style keyword openSpan closeSpan x) list11 
+    let list22 = map(\x -> style keyword openSpan closeSpan x) listxx11 
     let list33 = map(\x -> style title titleOpen titleClose x) list22
     let list44 = map(\x -> style comment commentOpen commentClose x) list33
     let list55 = map(\y -> map(\x -> replaceImgTab x) y) list44 
