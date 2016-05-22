@@ -75,7 +75,7 @@ keyword                 =  "^[[:space:]]*(:[[:graph:]]+)[[:space:]]*"
 -- [ xxx ], [xxx]
 titleOpen               =  "<span class=\"tit\">"
 titleClose              =  "</span>"
-title                   =  "^[[:space:]]*\\[[a-zA-Z0-9_ ]+\\]"
+title                   =  "^[[:space:]]*\\[[a-zA-Z0-9, _]+\\]"
 
 -- { xxx }, {xxx}
 header                  =  "^[[:space:]]*{[a-zA-Z0-9 ]+}"                                                                       
