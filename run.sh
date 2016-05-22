@@ -1,16 +1,24 @@
 #!/bin/bash
-echo "runhaskell geneHtml.hs /Library/WebServer/Documents/tiny3/noteindex.txt /Library/WebServer/Documents/tiny3/index.html"
+echo "-----------------------------------------------------------------------------------------------------------------------"
+echo "	runhaskell geneHtml.hs /Library/WebServer/Documents/tiny3/noteindex.txt /Library/WebServer/Documents/tiny3/index.html"
 cd $g/StaticSiteHaskell
 
-#runhaskell geneHtml.hs /Library/WebServer/Documents/tiny3/noteindex.txt /Library/WebServer/Documents/tiny3/index.html
+www=" runhaskell geneHtml.hs /Library/WebServer/Documents/tiny3/noteindex.txt /Library/WebServer/Documents/tiny3/index.html"
+test=" runhaskell geneHtml.hs /Library/WebServer/Documents/tiny3/test.txt /Library/WebServer/Documents/tiny3/index.html"
 
-echo "No argument with $g/test.html file"
-echo "One argument with $g/noteindex.html file"
-echo "arg num=$#"
 if [ $# -gt 0 ]; then 
-    runhaskell geneHtml.hs /Library/WebServer/Documents/tiny3/noteindex.txt /Library/WebServer/Documents/tiny3/index.html
+    echo "arg $1"
+    if [ $1 = "w" ]; then
+        echo $test 
+        runhaskell geneHtml.hs /Library/WebServer/Documents/tiny3/noteindex.txt /Library/WebServer/Documents/tiny3/index.html
+    elif [ $1 = "t" ]; then 
+        echo $www 
+        runhaskell geneHtml.hs /Library/WebServer/Documents/tiny3/test.txt /Library/WebServer/Documents/tiny3/index.html
+    fi 
 else
-    runhaskell geneHtml.hs /Library/WebServer/Documents/tiny3/test.html /Library/WebServer/Documents/tiny3/index.html
+    echo "Usage"
+    echo "tin w ->[$www]"
+    echo "tin t ->[$test]"
 fi
 
 echo "----------------------------------------"
@@ -20,3 +28,4 @@ echo "Haskell code is [$g/StaticSiteHaskell/geneHtml.hs]"
 echo "[$w/tiny3/noteindex.txt] -> [$w/tiny3/index.html]"
 echo "----------------------------------------"
 echo "$g/StaticSiteHaskell"
+

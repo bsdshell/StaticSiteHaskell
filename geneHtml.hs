@@ -75,7 +75,7 @@ keyword                 =  "^[[:space:]]*(:[[:graph:]]+)[[:space:]]*"
 -- [ xxx ], [xxx]
 titleOpen               =  "<span class=\"tit\">"
 titleClose              =  "</span>"
-title                   =  "^[[:space:]]*\\[[a-zA-Z0-9, _]+\\]"
+title                   =  "^[[:space:]]*\\[[a-zA-Z0-9:, _]+\\]"
 
 -- { xxx }, {xxx}
 header                  =  "^[[:space:]]*{[a-zA-Z0-9 ]+}"                                                                       
@@ -108,32 +108,30 @@ main = do
 
     let splitcode  = splitRegex(mkRegex "([[:blank:]]+`\\[[[:blank:]]*\n)|([[:blank:]]+`\\][[:blank:]]*\n)") (unlines line)
 
---    let list0     = replace lt html_lt line
---    let list1     = replace gt html_gt list0 
---
---    let list2     = style keyword openSpan closeSpan list1 
---    let list3     = style title titleOpen titleClose list2 
---    let list4     = style comment commentOpen commentClose list3
---
---    let list5     = map(\x->  replaceImgTab x) list4 
---
---    let list6     = style header headerOpen headerClose list5
---    let list7     = style numName spanNumOpen spanNumCose list6
---    let list8     = replace html_tab "\\0<br>" list7
-
-    --let splitcode  = splitRegex(mkRegex "([[:blank:]]+`\\[[[:blank:]]*\n)|([[:blank:]]+`\\][[:blank:]]*\n)") (unlines list8)
-
     -- [[--------------------------------------------------------------------------
-    
     let oddList    = fst $ splitList splitcode
     let evenListCode   = snd $ splitList splitcode
+    let evenListCode1  = replace lt html_lt evenListCode 
+    let evenListCode2  = replace gt html_gt evenListCode1 
 
+    print oddList
+    print "----------------------------------"
     let oddListList = map(\x->splitRegex(mkRegex "\n") x) oddList 
+    print oddListList
 
+    
     let list00 = map(\x -> replace lt html_lt x) oddListList
     let list11 = map(\x -> replace gt html_gt x) list00 
 
-    let list22 = map(\x -> style keyword openSpan closeSpan x) list11 
+    let listxx = map(\x -> if length x > 0 then init x else x) list11
+    let listxx11 = map(\x-> map(\y -> if length y == 0 then "<br>" else y) x) listxx 
+    print "================================="
+    print listxx11
+    print "================================="
+
+
+    --let list22 = map(\x -> style keyword openSpan closeSpan x) list11 
+    let list22 = map(\x -> style keyword openSpan closeSpan x) listxx11 
     let list33 = map(\x -> style title titleOpen titleClose x) list22
     let list44 = map(\x -> style comment commentOpen commentClose x) list33
     let list55 = map(\y -> map(\x -> replaceImgTab x) y) list44 
@@ -142,13 +140,11 @@ main = do
     let list77 = map(\x -> style numName spanNumOpen spanNumCose x) list66
     let list88 = map(\x -> replace html_tab "\\0<br>" x) list77
     let fold   = map(\x -> foldr (++) "" x)list88
-
     -- ]]--------------------------------------------------------------------------
 
 
-
     --let pat        = "(\\[|\\]|\\(|\\)|{|})"
-    let styleCode1         = codeHighLight pattern evenListCode 
+    let styleCode1         = codeHighLight pattern evenListCode2 
     let styleCode2         = codeHighLight pattern1 styleCode1 
     let finalStyleCode     = map(preOpen ++) $ map(++ preClose) styleCode2 
 

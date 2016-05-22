@@ -102,7 +102,6 @@ main = do
     contents <- hGetContents handle
 
     let line      = lines contents
-
     let splitcode  = splitRegex(mkRegex "([[:blank:]]+`\\[[[:blank:]]*\n)|([[:blank:]]+`\\][[:blank:]]*\n)") (unlines line)
     let oddList    = fst $ splitList splitcode
     let evenListCode   = snd $ splitList splitcode
