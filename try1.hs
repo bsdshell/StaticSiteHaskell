@@ -96,6 +96,7 @@ pattern1                = "([[:graph:]]+::)"
 --pattern                 = "(git)"
 -- cool
 -- try2 
+-- try3 
 
 main = do
     print("geneHtml input.txt out.txt")
