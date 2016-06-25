@@ -94,6 +94,7 @@ html_tab                =  "^[[:space:]]*(<[^<>]+>[^<>]*<[[:space:]]*/[^<>]+>.*$
 pattern                 = "(\\[|\\]|\\(|\\)|{|}|git|maybe |-&gt;)"
 pattern1                = "([[:graph:]]+::)"
 --pattern                 = "(git)"
+-- cool
 
 main = do
     print("geneHtml input.txt out.txt")
