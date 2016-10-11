@@ -46,12 +46,6 @@ codeHighLight pat list = map(`op` rep) list
                 where rep = "<span class=\"bracket\">\\1</span>"
                       op = subRegex $ mkRegex pat
 
-displayPath::String->String->String->String
-displayPath path inFile outFile = if inFile == "mytext.txt" 
-                            then "file://" ++path ++ "/" ++ outFile 
-                            else ""
-
-
 lt                      =  "(<)"
 gt                      =  "(>)"
 
@@ -115,7 +109,7 @@ main = do
     let evenListCode2  = replace gt html_gt evenListCode1 
 
     print oddList
-    print "----------------------------------"
+    fl
     let oddListList = map(\x->splitRegex(mkRegex "\n") x) oddList 
     print oddListList
 
@@ -125,10 +119,7 @@ main = do
 
     let listxx = map(\x -> if length x > 0 then init x else x) list11
     let listxx11 = map(\x-> map(\y -> if length y == 0 then "<br>" else y) x) listxx 
-    print "================================="
-    print listxx11
-    print "================================="
-
+    ff "listxx11" listxx11
 
     --let list22 = map(\x -> style keyword openSpan closeSpan x) list11 
     let list22 = map(\x -> style keyword openSpan closeSpan x) listxx11 
@@ -142,23 +133,10 @@ main = do
     let fold   = map(\x -> foldr (++) "" x)list88
     -- ]]--------------------------------------------------------------------------
 
-
-    --let pat        = "(\\[|\\]|\\(|\\)|{|})"
     let styleCode1         = codeHighLight pattern evenListCode2 
     let styleCode2         = codeHighLight pattern1 styleCode1 
     let finalStyleCode     = map(preOpen ++) $ map(++ preClose) styleCode2 
-
-    --let mergeAllList = mergeList oddList finalStyleCode 
     let mergeAllList = mergeList fold finalStyleCode 
 
     writeFile outFile $ html htmlOpen htmlClose mergeAllList 
-
-    --putStr contents
     hClose handle
-
-    currDir <- getCurrentDirectory
-    let fullPath = displayPath currDir inFile outFile 
-    putStrLn ""
-    putStrLn "Html Path: copy following path to your browser"
-    putStrLn fullPath
-
