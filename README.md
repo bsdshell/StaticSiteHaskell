@@ -1,5 +1,6 @@
 # Generate HTML/CSS from specific syntax file 
 
+- Last Updated: Tue Oct 11 16:01:47 PDT 2016
 #### What does the Haskell script do? 
 - Parse specific syntax file and generate HTML from a given CSS file 
 
